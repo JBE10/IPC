@@ -13,11 +13,11 @@ class CarritoPersonal:
             with open(self.nombre_archivo, 'r', encoding='utf-8') as f:
                 for linea in f:
                     if linea.strip():
-                        nombre, url, cantidad = linea.strip().split('|')
+                        url, nombre = linea.strip().split(';')
                         productos.append({
-                            "nombre": nombre,
-                            "url": url,
-                            "cantidad": int(cantidad),
+                            "nombre": nombre.strip(),
+                            "url": url.strip(),
+                            "cantidad": 1,  # Cantidad por defecto
                             "fecha_agregado": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         })
         return productos
@@ -62,12 +62,12 @@ class CarritoPersonal:
         
         for producto in self.productos:
             print(f"- {producto['nombre']}")
-            print(f"  Cantidad: {producto['cantidad']}")
             print(f"  URL: {producto['url']}\n")
 
 # Ejemplo de uso
 if __name__ == "__main__":
     carrito = CarritoPersonal()
+    carrito.mostrar_carrito()
     
     while True:
         print("\n=== MENÚ DEL CARRITO ===")

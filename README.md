@@ -4,7 +4,7 @@ Este proyecto permite realizar un seguimiento personalizado de precios de produc
 
 ## Características
 
-- Gestión de carrito personal de productos
+- Gestión de carrito personal de productos mediante archivo txt
 - Seguimiento diario de precios
 - Cálculo de variaciones porcentuales
 - Generación de IPC personalizado
@@ -33,17 +33,25 @@ pip install -r requirements.txt
 
 ## Uso
 
-### Gestión del Carrito
+### Configuración del Carrito
+
+El carrito se configura mediante el archivo `mi_carrito.txt`. Cada línea debe tener el siguiente formato:
+```
+url;nombre_del_producto
+```
+
+Ejemplo:
+```
+https://diaonline.supermercadosdia.com.ar/leche-descremada-la-serenisima-protein-1-lt-272382/p;Leche La Serenísima Protein 1Lt
+https://diaonline.supermercadosdia.com.ar/arroz-gallo-oro-1-kg-272382/p;Arroz Gallo Oro 1kg
+```
+
+### Verificar el Carrito
 
 ```bash
 python carrito.py
 ```
-
-Opciones disponibles:
-- Ver carrito
-- Agregar producto
-- Eliminar producto
-- Modificar cantidad
+Este comando mostrará los productos cargados desde el archivo txt.
 
 ### Seguimiento de Precios
 
@@ -61,7 +69,7 @@ Opciones disponibles:
 - `carrito.py`: Gestión del carrito personal
 - `comparador.py`: Seguimiento y análisis de precios
 - `main.py`: Funciones principales de scraping
-- `mi_carrito.txt`: Carrito personal (se crea automáticamente)
+- `mi_carrito.txt`: Carrito personal (formato: url;nombre)
 - `precios_diarios.txt`: Historial de precios (se crea automáticamente)
 
 ## Contribuir
