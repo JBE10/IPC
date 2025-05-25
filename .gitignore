@@ -30,6 +30,8 @@ mi_carrito.txt
 precios_diarios.txt
 *.txt
 !requirements.txt
+seguimiento_precios.csv
+canasta_personalizada_*.txt
 
 # Archivos del sistema
 .DS_Store
