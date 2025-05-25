@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 import pandas as pd
 import os
+import difflib
 from config import DIVISIONES_IPC
 
 def limpiar_precio(texto_precio):
@@ -85,8 +86,24 @@ def obtener_ultimos_csvs():
     return df_resumen, df_divisiones, df_productos
 
 def validar_division(division):
-    """Valida si una división existe en las divisiones del IPC."""
+    """Valida si una división existe en las divisiones del IPC y sugiere la más cercana si no existe."""
     if division not in DIVISIONES_IPC:
-        print(f"Advertencia: División '{division}' no válida. Se asigna 'Alimentos y bebidas no alcohólicas' por defecto.")
-        return "Alimentos y bebidas no alcohólicas"
+        # Buscar la división más cercana
+        sugerida = difflib.get_close_matches(division, DIVISIONES_IPC.keys(), n=1)
+        if sugerida:
+            print(f"Advertencia: División '{division}' no válida. ¿Quizás quisiste decir '{sugerida[0]}'?")
+            return sugerida[0]
+        else:
+            # Si no hay sugerencia, asignar a una categoría general según el nombre
+            if "pan" in division.lower() or "galletita" in division.lower():
+                return "Panificados"
+            elif "almacén" in division.lower() or "arroz" in division.lower() or "harina" in division.lower():
+                return "Almacén"
+            elif "fresco" in division.lower() or "fruta" in division.lower() or "verdura" in division.lower():
+                return "Frescos"
+            elif "bebida" in division.lower():
+                return "Bebidas"
+            else:
+                print(f"Advertencia: División '{division}' no válida. Se asigna 'Alimentos y bebidas no alcohólicas' por defecto.")
+                return "Alimentos y bebidas no alcohólicas"
     return division 

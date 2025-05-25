@@ -58,8 +58,8 @@ def cargar_productos():
             for linea in f:
                 if linea.strip():
                     partes = linea.strip().split(';')
-                    if len(partes) >= 4:  # URL, nombre, categoría, cantidad mensual
-                        url, nombre, division, cantidad = partes
+                    if len(partes) >= 4:  # código, nombre, categoría, cantidad mensual
+                        codigo, nombre, division, cantidad = partes
                         division = division.strip()
                         try:
                             cantidad = float(cantidad.strip())
@@ -70,8 +70,8 @@ def cargar_productos():
                         division = validar_division(division)
                         
                         productos.append({
+                            "codigo": codigo.strip(),
                             "nombre": nombre.strip(),
-                            "url": url.strip(),
                             "division": division,
                             "cantidad_mensual": cantidad
                         })
@@ -100,7 +100,7 @@ def obtener_precios(productos):
     print(f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
 
     for producto in productos:
-        precio = obtener_precio_dia(producto["url"])
+        precio = obtener_precio_dia(producto["codigo"])
         if precio is not None:
             precio_total = precio * producto["cantidad_mensual"]
             precios[producto["nombre"]] = precio_total
@@ -115,7 +115,7 @@ def obtener_precios(productos):
         
     return precios, precios_por_division, cantidades_por_division, total
 
-def generar_resumen(precios, precios_por_division, cantidades_por_division, total, df_productos):
+def generar_resumen(precios, precios_por_division, cantidades_por_division, total, df_productos, productos):
     """Genera el resumen de precios y variaciones."""
     resumen = []
     fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M')
@@ -283,7 +283,7 @@ def main():
         
         # Generar resumen
         resumen, ipc_divisiones, ipc_general = generar_resumen(
-            precios, precios_por_division, cantidades_por_division, total, df_productos
+            precios, precios_por_division, cantidades_por_division, total, df_productos, productos
         )
         
         # Guardar datos

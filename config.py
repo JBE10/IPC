@@ -1,8 +1,17 @@
 # Definición de divisiones del IPC y sus pesos
 DIVISIONES_IPC = {
+    # Alimentos y bebidas
     "Alimentos y bebidas no alcohólicas": 0.25,
     "Pan y cereales": 0.25,
     "Bebidas alcohólicas y tabaco": 0.027,
+    
+    # Categorías de supermercado
+    "Panificados": 0.05,
+    "Almacén": 0.15,
+    "Frescos": 0.20,
+    "Bebidas": 0.05,
+    
+    # Otras categorías
     "Prendas de vestir y calzado": 0.057,
     "Vivienda, agua, electricidad, gas y otros combustibles": 0.15,
     "Muebles, artículos para el hogar y para la conservación ordinaria del hogar": 0.05,

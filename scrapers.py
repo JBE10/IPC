@@ -4,27 +4,12 @@ import re
 from utils import limpiar_precio
 from config import HEADERS
 
-def obtener_precio_dia(url):
-    """Obtiene el precio de un producto de Día."""
+def obtener_precio_dia(codigo):
+    """Obtiene el precio de un producto de Día usando su código."""
     try:
-        # Extraer el ID del producto de la URL
-        product_id = None
-        if '/p' in url:
-            url_base = url.split('/p')[0]
-            segments = url_base.split('/')
-            if segments:
-                last_segment = segments[-1]
-                match = re.search(r'(\d+)$', last_segment)
-                if match:
-                    product_id = match.group(1)
+        api_url = f"https://diaonline.supermercadosdia.com.ar/api/catalog_system/pub/products/search?fq=productId:{codigo}"
         
-        if not product_id:
-            print(f"No se pudo extraer el ID del producto de la URL: {url}")
-            return None
-            
-        api_url = f"https://diaonline.supermercadosdia.com.ar/api/catalog_system/pub/products/search?fq=productId:{product_id}"
-        
-        print(f"Consultando API para producto ID: {product_id}")
+        print(f"Consultando API para producto ID: {codigo}")
         response = requests.get(api_url, headers=HEADERS, timeout=10)
         response.raise_for_status()
         
@@ -35,7 +20,7 @@ def obtener_precio_dia(url):
             if price is not None:
                 return float(price)
         
-        print(f"No se encontró el precio para la URL: {url}")
+        print(f"No se encontró el precio para el código: {codigo}")
         return None
     except Exception as e:
         print(f"Error al obtener el precio: {e}")
