@@ -1,22 +1,18 @@
-# IPC Personal - Seguimiento de Precios
+# Seguimiento de Precios DIA
 
-Este proyecto permite realizar un seguimiento personalizado de precios de productos de supermercados, calculando variaciones diarias y generando un IPC (Índice de Precios al Consumidor) personalizado.
+Este proyecto permite realizar un seguimiento de los precios de productos específicos del supermercado DIA en Argentina, utilizando su API pública.
 
 ## Características
 
-- Gestión de carrito personal de productos mediante archivo txt
-- Seguimiento diario de precios
-- Cálculo de variaciones porcentuales
-- Generación de IPC personalizado
-- Exportación de reportes en formato TXT
+- Extracción de precios en tiempo real de productos DIA
+- Seguimiento de precios a lo largo del tiempo
+- Exportación de datos en formato CSV para análisis
+- Cálculo automático del total de la canasta
 
 ## Requisitos
 
-- Python 3.6 o superior
-- Módulos requeridos:
-  - requests
-  - beautifulsoup4
-  - datetime
+- Python 3.9 o superior
+- pip (gestor de paquetes de Python)
 
 ## Instalación
 
@@ -26,60 +22,40 @@ git clone https://github.com/JBE10/IPC.git
 cd IPC
 ```
 
-2. Instalar dependencias:
+2. Crear y activar un entorno virtual:
+```bash
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
+```
+
+3. Instalar las dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Uso
 
-### Configuración del Carrito
-
-El carrito se configura mediante el archivo `mi_carrito.txt`. Cada línea debe tener el siguiente formato:
+1. Configurar los productos en `mi_carrito.txt`:
 ```
-url;nombre_del_producto
+URL_DEL_PRODUCTO;NOMBRE_DEL_PRODUCTO
 ```
 
-Ejemplo:
-```
-https://diaonline.supermercadosdia.com.ar/leche-descremada-la-serenisima-protein-1-lt-272382/p;Leche La Serenísima Protein 1Lt
-https://diaonline.supermercadosdia.com.ar/arroz-gallo-oro-1-kg-272382/p;Arroz Gallo Oro 1kg
-```
-
-### Verificar el Carrito
-
+2. Ejecutar el script:
 ```bash
-python carrito.py
-```
-Este comando mostrará los productos cargados desde el archivo txt.
-
-### Seguimiento de Precios
-
-```bash
-python comparador.py
+python main.py
 ```
 
-Opciones disponibles:
-- Actualizar precios
-- Ver variación IPC
-- Exportar variación
+El script generará:
+- Un archivo CSV (`seguimiento_precios.csv`) con el historial de precios
+- Un archivo de texto con el resumen del día
 
-## Estructura de Archivos
+## Estructura del Proyecto
 
-- `carrito.py`: Gestión del carrito personal
-- `comparador.py`: Seguimiento y análisis de precios
-- `main.py`: Funciones principales de scraping
-- `mi_carrito.txt`: Carrito personal (formato: url;nombre)
-- `precios_diarios.txt`: Historial de precios (se crea automáticamente)
-
-## Contribuir
-
-1. Fork el proyecto
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
+- `main.py`: Script principal para obtener y registrar precios
+- `mi_carrito.txt`: Lista de productos a monitorear
+- `seguimiento_precios.csv`: Historial de precios
+- `requirements.txt`: Dependencias del proyecto
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles. 
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles. 
