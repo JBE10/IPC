@@ -270,11 +270,11 @@ def guardar_datos(fecha_actual, total, ipc_general, ipc_divisiones, precios_por_
     return df_resumen, df_divisiones, df_productos
 
 def main():
-    """Función principal del programa."""
+    """Función principal del script."""
     # Cargar productos
     productos = cargar_productos()
     
-    # Obtener precios
+    # Obtener precios actuales
     precios, precios_por_division, cantidades_por_division, total = obtener_precios(productos)
     
     if precios:
@@ -309,6 +309,29 @@ def main():
                 resumen.append(f"  IPC: {signo}{ipc:.1f}%")
         
         print("\n".join(resumen))
+        
+        # Calcular variación semanal
+        try:
+            # Calcular variación semanal
+            variaciones_semanales = calcular_variacion_semanal(df_productos)
+            
+            # Guardar variaciones semanales
+            variaciones_semanales.to_csv(f"variaciones_semanales_{datetime.now().strftime('%Y%m')}.csv", index=False)
+            
+            # Mostrar resumen de variaciones semanales
+            print("\nVariaciones semanales promedio:")
+            print("=" * 80)
+            for _, row in variaciones_semanales.iterrows():
+                print(f"\nProducto: {row['Producto']}")
+                print(f"Semana {row['Semana_Actual']} del {row['Año_Actual']}")
+                print(f"Precio promedio actual: ${row['Precio_Promedio_Actual']:.2f}")
+                print(f"Precio promedio anterior: ${row['Precio_Promedio_Anterior']:.2f}")
+                print(f"Variación: ${row['Variacion']:.2f} ({row['Porcentaje']:.2f}%)")
+                print("-" * 80)
+                
+        except Exception as e:
+            print(f"\nError al calcular variaciones semanales: {e}")
+            print("Se necesitan al menos dos semanas de datos.")
     else:
         print("No se pudo obtener el precio de ningún producto.")
 

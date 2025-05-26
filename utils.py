@@ -106,4 +106,50 @@ def validar_division(division):
             else:
                 print(f"Advertencia: División '{division}' no válida. Se asigna 'Alimentos y bebidas no alcohólicas' por defecto.")
                 return "Alimentos y bebidas no alcohólicas"
-    return division 
+    return division
+
+def calcular_variacion_semanal(df_productos):
+    """
+    Calcula la variación promedio semanal de precios.
+    
+    Args:
+        df_productos: DataFrame con los precios históricos
+        
+    Returns:
+        DataFrame con la variación semanal promedio por producto
+    """
+    # Convertir la columna Fecha a datetime
+    df_productos['Fecha'] = pd.to_datetime(df_productos['Fecha'])
+    
+    # Agregar columnas de año y semana
+    df_productos['Año'] = df_productos['Fecha'].dt.isocalendar().year
+    df_productos['Semana'] = df_productos['Fecha'].dt.isocalendar().week
+    
+    # Calcular el promedio semanal por producto
+    promedios_semanales = df_productos.groupby(['Producto', 'Año', 'Semana'])['Precio'].mean().reset_index()
+    
+    # Ordenar por producto y semana
+    promedios_semanales = promedios_semanales.sort_values(['Producto', 'Año', 'Semana'])
+    
+    # Calcular la variación semanal
+    variaciones = []
+    for producto in promedios_semanales['Producto'].unique():
+        df_producto = promedios_semanales[promedios_semanales['Producto'] == producto]
+        
+        for i in range(1, len(df_producto)):
+            precio_actual = df_producto.iloc[i]['Precio']
+            precio_anterior = df_producto.iloc[i-1]['Precio']
+            variacion = precio_actual - precio_anterior
+            porcentaje = (variacion / precio_anterior) * 100
+            
+            variaciones.append({
+                'Producto': producto,
+                'Semana_Actual': df_producto.iloc[i]['Semana'],
+                'Año_Actual': df_producto.iloc[i]['Año'],
+                'Precio_Promedio_Actual': precio_actual,
+                'Precio_Promedio_Anterior': precio_anterior,
+                'Variacion': variacion,
+                'Porcentaje': porcentaje
+            })
+    
+    return pd.DataFrame(variaciones) 
