@@ -55,7 +55,7 @@ Fecha,Division,Total,Variacion,Porcentaje,IPC
 2025-05-27 23:27,Bebidas alcohólicas y tabaco,19660.0,0.0,0.0,0.0
 2025-05-27 23:27,Panificados,5768.0,0.0,0.0,0.0
 2025-05-27 23:27,Almacén,44568.0,600.0,1.3646288209606987,1.3646288209606998
-2025-05-27 23:27,Frescos,180970.0,6720.0,3.8565279770444763,3.8565279770444736
+2025-05-27 23:27,Frescos,180970.0,6720.0,3.856527977044476,3.8565279770444736
 2025-05-27 23:27,Bebidas,0.0,0.0,,0.0
 2025-05-27 23:27,Prendas de vestir y calzado,0.0,0.0,,0.0
 2025-05-27 23:27,"Vivienda, agua, electricidad, gas y otros combustibles",0.0,0.0,,0.0
@@ -67,3 +67,20 @@ Fecha,Division,Total,Variacion,Porcentaje,IPC
 2025-05-27 23:27,Educación,0.0,0.0,,0.0
 2025-05-27 23:27,Restaurantes y hoteles,0.0,0.0,,0.0
 2025-05-27 23:27,Bienes y servicios diversos,0.0,0.0,,0.0
+2025-05-28 22:25,Alimentos y bebidas no alcohólicas,0.0,0.0,,0.0
+2025-05-28 22:25,Pan y cereales,0.0,0.0,,0.0
+2025-05-28 22:25,Bebidas alcohólicas y tabaco,18860.0,-800.0,-4.069175991861648,-4.069175991861648
+2025-05-28 22:25,Panificados,4993.0,-775.0,-13.436199722607489,-13.436199722607498
+2025-05-28 22:25,Almacén,43968.0,-600.0,-1.3462574044157243,-1.3462574044157252
+2025-05-28 22:25,Frescos,176765.0,-4205.0,-2.323589545228491,-2.3235895452284794
+2025-05-28 22:25,Bebidas,0.0,0.0,,0.0
+2025-05-28 22:25,Prendas de vestir y calzado,0.0,0.0,,0.0
+2025-05-28 22:25,"Vivienda, agua, electricidad, gas y otros combustibles",0.0,0.0,,0.0
+2025-05-28 22:25,"Muebles, artículos para el hogar y para la conservación ordinaria del hogar",0.0,0.0,,0.0
+2025-05-28 22:25,Salud,0.0,0.0,,0.0
+2025-05-28 22:25,Transporte,0.0,0.0,,0.0
+2025-05-28 22:25,Comunicación,0.0,0.0,,0.0
+2025-05-28 22:25,Recreación y cultura,0.0,0.0,,0.0
+2025-05-28 22:25,Educación,0.0,0.0,,0.0
+2025-05-28 22:25,Restaurantes y hoteles,0.0,0.0,,0.0
+2025-05-28 22:25,Bienes y servicios diversos,0.0,0.0,,0.0
