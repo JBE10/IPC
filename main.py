@@ -312,8 +312,13 @@ def main():
     precios, precios_por_division, cantidades_por_division, total = obtener_precios(productos)
     
     if precios:
-        # Obtener DataFrames
-        df_resumen, df_divisiones, df_productos = obtener_ultimos_csvs()
+        # Verificar si es el primer día del mes
+        if es_primer_dia_del_mes():
+            print("\nEs el primer día del mes. Creando nuevos archivos CSV...")
+            df_resumen, df_divisiones, df_productos = crear_nuevo_mes_csv()
+        else:
+            # Obtener DataFrames existentes
+            df_resumen, df_divisiones, df_productos = obtener_ultimos_csvs()
         
         # Generar resumen
         resumen, ipc_divisiones, ipc_general = generar_resumen(
