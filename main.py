@@ -133,6 +133,8 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
     # Calcular IPC por división
     resumen.append("\nIPC por División (variación diaria):")
     ipc_divisiones = {}
+    total_por_division = {}
+    
     for division, peso in DIVISIONES_IPC.items():
         precios_actuales = precios_por_division.get(division, [])
         cantidades_actuales = cantidades_por_division.get(division, [])
@@ -159,6 +161,7 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
                 variacion_promedio = precio_promedio_actual - precio_promedio_anterior
                 porcentaje = (variacion_promedio / precio_promedio_anterior) * 100
                 ipc_divisiones[division] = porcentaje
+                total_por_division[division] = sum(precios_actuales)
                 signo = "+" if variacion_promedio > 0 else ""
                 resumen.append(f"- {division}: {signo}{porcentaje:.1f}% (Peso: {peso*100:.1f}%)")
     
@@ -171,6 +174,25 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
         pesos_normalizados = {div: DIVISIONES_IPC[div]/peso_total for div in divisiones_con_datos.keys()}
         # Calcular IPC general ponderado
         ipc_general = sum(ipc * pesos_normalizados[div] for div, ipc in divisiones_con_datos.items())
+        
+        # Calcular el IPC general como variación del total
+        total_actual = sum(total_por_division.values())
+        total_anterior = sum(
+            sum(precios_anteriores) for precios_anteriores in [
+                [df_productos[
+                    (df_productos["Producto"] == p["nombre"]) & 
+                    (df_productos["Fecha"] == df_productos["Fecha"].max())
+                ].iloc[0]["Precio"] * p["cantidad_mensual"] 
+                for p in productos if p["division"] == div]
+                for div in divisiones_con_datos.keys()
+            ]
+        )
+        
+        variacion_total = total_actual - total_anterior
+        porcentaje_total = (variacion_total / total_anterior) * 100
+        
+        # Usar el promedio de ambos cálculos
+        ipc_general = (ipc_general + porcentaje_total) / 2
     else:
         ipc_general = 0.0
     
