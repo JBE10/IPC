@@ -145,6 +145,9 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
     ipc_divisiones = {}
     total_por_division = {}
     
+    # Obtener la fecha de ayer
+    fecha_ayer = (datetime.now() - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+    
     for division, peso in DIVISIONES_IPC.items():
         if division in divisiones_alimentos:
             precios_actuales = precios_por_division.get(division, [])
@@ -154,9 +157,10 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
                 cantidades_anteriores = []
                 for producto in productos:
                     if producto["division"] == division:
+                        # Buscar el precio de ayer
                         producto_anterior = df_productos[
                             (df_productos["Producto"] == producto["nombre"]) & 
-                            (df_productos["Fecha"] == df_productos["Fecha"].max())
+                            (df_productos["Fecha"].str.startswith(fecha_ayer))
                         ] if not df_productos.empty else pd.DataFrame()
                         
                         if not producto_anterior.empty:
@@ -192,7 +196,7 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
             sum(precios_anteriores) for precios_anteriores in [
                 [df_productos[
                     (df_productos["Producto"] == p["nombre"]) & 
-                    (df_productos["Fecha"] == df_productos["Fecha"].max())
+                    (df_productos["Fecha"].str.startswith(fecha_ayer))
                 ].iloc[0]["Precio"] * p["cantidad_mensual"] 
                 for p in productos if p["division"] == div]
                 for div in divisiones_con_datos.keys()

@@ -157,7 +157,7 @@ def calcular_variacion_semanal(df_productos):
 def calcular_variacion_mensual(df_productos):
     """
     Calcula la variación mensual de precios para la canasta básica de alimentos.
-    Solo considera los productos del carrito del usuario.
+    Compara el primer dato del mes con el último obtenido.
     
     Args:
         df_productos: DataFrame con los precios históricos
@@ -185,30 +185,43 @@ def calcular_variacion_mensual(df_productos):
     # Filtrar solo productos de alimentos básicos
     df_alimentos = df_productos[df_productos['Division'].isin(divisiones_alimentos)]
     
-    # Calcular el promedio mensual por producto
-    promedios_mensuales = df_alimentos.groupby(['Producto', 'Division', 'Año', 'Mes'])['Precio'].mean().reset_index()
+    # Obtener el primer y último dato del mes actual
+    mes_actual = datetime.now().month
+    año_actual = datetime.now().year
     
-    # Ordenar por producto y mes
-    promedios_mensuales = promedios_mensuales.sort_values(['Producto', 'Año', 'Mes'])
+    # Filtrar datos del mes actual
+    df_mes_actual = df_alimentos[
+        (df_alimentos['Mes'] == mes_actual) & 
+        (df_alimentos['Año'] == año_actual)
+    ]
     
-    # Calcular la variación mensual
+    if df_mes_actual.empty:
+        return pd.DataFrame()  # Retornar DataFrame vacío si no hay datos del mes actual
+    
+    # Obtener el primer y último dato por producto
     variaciones = []
-    for producto in promedios_mensuales['Producto'].unique():
-        df_producto = promedios_mensuales[promedios_mensuales['Producto'] == producto]
+    for producto in df_mes_actual['Producto'].unique():
+        df_producto = df_mes_actual[df_mes_actual['Producto'] == producto]
         
-        for i in range(1, len(df_producto)):
-            precio_actual = df_producto.iloc[i]['Precio']
-            precio_anterior = df_producto.iloc[i-1]['Precio']
+        # Ordenar por fecha
+        df_producto = df_producto.sort_values('Fecha')
+        
+        if len(df_producto) >= 2:  # Necesitamos al menos dos datos
+            primer_dato = df_producto.iloc[0]
+            ultimo_dato = df_producto.iloc[-1]
+            
+            precio_actual = ultimo_dato['Precio']
+            precio_anterior = primer_dato['Precio']
             variacion = precio_actual - precio_anterior
             porcentaje = (variacion / precio_anterior) * 100
             
             variaciones.append({
                 'Producto': producto,
-                'Division': df_producto.iloc[i]['Division'],
-                'Mes_Actual': df_producto.iloc[i]['Mes'],
-                'Año_Actual': df_producto.iloc[i]['Año'],
-                'Precio_Promedio_Actual': precio_actual,
-                'Precio_Promedio_Anterior': precio_anterior,
+                'Division': ultimo_dato['Division'],
+                'Mes_Actual': mes_actual,
+                'Año_Actual': año_actual,
+                'Precio_Primer_Dia': precio_anterior,
+                'Precio_Ultimo_Dia': precio_actual,
                 'Variacion': variacion,
                 'Porcentaje': porcentaje
             })
