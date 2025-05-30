@@ -17,7 +17,8 @@ from utils import (
     obtener_ultimos_csvs,
     validar_division,
     calcular_variacion_semanal,
-    calcular_variacion_mensual
+    calcular_variacion_mensual,
+    limpiar_precio
 )
 from scrapers import (
     obtener_precio_dia,
@@ -25,20 +26,6 @@ from scrapers import (
     obtener_precio_coto,
     obtener_precio_jumbo
 )
-
-# --- Función para Limpiar y Convertir Precios ---
-def limpiar_precio(texto_precio):
-    if not texto_precio:
-        return None
-    # Quitar símbolo de moneda, puntos de miles y espacios (incluyendo \xa0)
-    limpio = texto_precio.replace("$", "").replace(".", "").replace("\xa0", "").replace("\u202f", "").replace(" ", "").strip()
-    # Reemplazar coma decimal por punto decimal
-    limpio = limpio.replace(",", ".")
-    try:
-        return float(limpio)
-    except ValueError:
-        print(f"Advertencia: No se pudo convertir a número: '{texto_precio}' -> '{limpio}'")
-        return None
 
 # --- Headers mejorados para simular un navegador real ---
 HEADERS = {
@@ -121,14 +108,15 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
     """Genera el resumen de precios y variaciones de la canasta básica de alimentos."""
     resumen = []
     fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M')
+    fecha_ayer = (datetime.now() - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
     
     resumen.append(f"Fecha: {fecha_actual}")
-    resumen.append("\nPrecios individuales (considerando cantidades mensuales):")
-    for producto, precio in precios.items():
-        resumen.append(f"- {producto}: ${precio:.2f}")
+    resumen.append("\nPrecios individuales actuales (considerando cantidades mensuales):")
+    for nombre_prod, precio_total_prod in precios.items():
+        resumen.append(f"- {nombre_prod}: ${precio_total_prod:.2f}")
     
-    resumen.append(f"\nValor total de la canasta básica: ${total:.2f}")
-    resumen.append(f"Cantidad de productos: {len(precios)}")
+    resumen.append(f"\nValor total actual de la canasta (productos encontrados hoy): ${total:.2f}")
+    resumen.append(f"Cantidad de productos con precio hoy: {len(precios)}")
     
     # Definir divisiones de alimentos básicos
     divisiones_alimentos = [
@@ -140,80 +128,71 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
         "Bebidas"
     ]
     
-    # Calcular IPC por división (solo alimentos básicos)
-    resumen.append("\nIPC por División (variación diaria):")
+    resumen.append("\nIPC por División (variación diaria comparable):")
     ipc_divisiones = {}
-    total_por_division = {}
+    total_valor_actual_canasta_alimentos_comparable = 0
+    total_valor_anterior_canasta_alimentos_comparable = 0
     
-    # Obtener la fecha de ayer
-    fecha_ayer = (datetime.now() - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+    # Filtrar los productos de la canasta que pertenecen a las divisiones de alimentos
+    productos_de_alimentos_config = [p for p in productos if p["division"] in divisiones_alimentos]
     
-    for division, peso in DIVISIONES_IPC.items():
-        if division in divisiones_alimentos:
-            precios_actuales = precios_por_division.get(division, [])
-            cantidades_actuales = cantidades_por_division.get(division, [])
-            if precios_actuales and cantidades_actuales:
-                precios_anteriores = []
-                cantidades_anteriores = []
-                for producto in productos:
-                    if producto["division"] == division:
-                        # Buscar el precio de ayer
-                        producto_anterior = df_productos[
-                            (df_productos["Producto"] == producto["nombre"]) & 
-                            (df_productos["Fecha"].str.startswith(fecha_ayer))
-                        ] if not df_productos.empty else pd.DataFrame()
-                        
-                        if not producto_anterior.empty:
-                            precio_anterior = producto_anterior.iloc[0]["Precio"]
-                            if precio_anterior is not None:
-                                precios_anteriores.append(precio_anterior)
-                                cantidades_anteriores.append(producto["cantidad_mensual"])
+    for division_cfg, peso_config_division in DIVISIONES_IPC.items():
+        if division_cfg not in divisiones_alimentos:
+            continue
+            
+        valor_actual_division_comparable = 0
+        valor_anterior_division_comparable = 0
+        productos_contados_en_division = 0
+        
+        for producto_canasta in productos_de_alimentos_config:
+            if producto_canasta["division"] == division_cfg:
+                nombre_producto = producto_canasta["nombre"]
+                cantidad_mensual = producto_canasta["cantidad_mensual"]
                 
-                if precios_anteriores and cantidades_anteriores:
-                    precio_promedio_actual = sum(precios_actuales) / sum(cantidades_actuales)
-                    precio_promedio_anterior = sum(precios_anteriores) / sum(cantidades_anteriores)
-                    
-                    variacion_promedio = precio_promedio_actual - precio_promedio_anterior
-                    porcentaje = (variacion_promedio / precio_promedio_anterior) * 100
-                    ipc_divisiones[division] = porcentaje
-                    total_por_division[division] = sum(precios_actuales)
-                    signo = "+" if variacion_promedio > 0 else ""
-                    resumen.append(f"- {division}: {signo}{porcentaje:.1f}% (Peso: {peso*100:.1f}%)")
-    
-    # Calcular IPC general ponderado (solo alimentos básicos)
-    divisiones_con_datos = {div: ipc for div, ipc in ipc_divisiones.items() if ipc is not None and div in divisiones_alimentos}
-    if divisiones_con_datos:
-        # Calcular el peso total de las divisiones con datos
-        peso_total = sum(DIVISIONES_IPC[div] for div in divisiones_con_datos.keys())
-        # Normalizar los pesos para que sumen 1
-        pesos_normalizados = {div: DIVISIONES_IPC[div]/peso_total for div in divisiones_con_datos.keys()}
-        # Calcular IPC general ponderado
-        ipc_general = sum(ipc * pesos_normalizados[div] for div, ipc in divisiones_con_datos.items())
-        
-        # Calcular el IPC general como variación del total
-        total_actual = sum(total_por_division.values())
-        total_anterior = sum(
-            sum(precios_anteriores) for precios_anteriores in [
-                [df_productos[
-                    (df_productos["Producto"] == p["nombre"]) & 
+                # El precio actual ya está ponderado por cantidad_mensual en el diccionario 'precios'
+                precio_total_actual_producto = precios.get(nombre_producto)
+                
+                # Buscar precio unitario del día anterior en el histórico df_productos
+                producto_ayer_df = df_productos[
+                    (df_productos["Producto"] == nombre_producto) & 
                     (df_productos["Fecha"].str.startswith(fecha_ayer))
-                ].iloc[0]["Precio"] * p["cantidad_mensual"] 
-                for p in productos if p["division"] == div]
-                for div in divisiones_con_datos.keys()
-            ]
-        )
+                ] if not df_productos.empty else pd.DataFrame()
+                
+                if precio_total_actual_producto is not None and not producto_ayer_df.empty:
+                    precio_unitario_ayer = producto_ayer_df.iloc[0]["Precio"]
+                    
+                    if pd.notna(precio_unitario_ayer):
+                        precio_total_anterior_producto = precio_unitario_ayer * cantidad_mensual
+                        
+                        valor_actual_division_comparable += precio_total_actual_producto
+                        valor_anterior_division_comparable += precio_total_anterior_producto
+                        productos_contados_en_division += 1
         
-        variacion_total = total_actual - total_anterior
-        porcentaje_total = (variacion_total / total_anterior) * 100
+        if productos_contados_en_division > 0 and valor_anterior_division_comparable > 0:
+            variacion_division_comparable = valor_actual_division_comparable - valor_anterior_division_comparable
+            porcentaje_division_comparable = (variacion_division_comparable / valor_anterior_division_comparable) * 100
+            ipc_divisiones[division_cfg] = porcentaje_division_comparable
+            signo = "+" if variacion_division_comparable >= 0 else ""
+            resumen.append(f"- {division_cfg}: {signo}{porcentaje_division_comparable:.2f}% (sobre {productos_contados_en_division} prod. comparables)")
+        else:
+            ipc_divisiones[division_cfg] = 0.0
+            resumen.append(f"- {division_cfg}: No hay datos suficientes para comparación diaria.")
         
-        # Usar el promedio de ambos cálculos
-        ipc_general = (ipc_general + porcentaje_total) / 2
+        total_valor_actual_canasta_alimentos_comparable += valor_actual_division_comparable
+        total_valor_anterior_canasta_alimentos_comparable += valor_anterior_division_comparable
+    
+    # Calcular IPC general basado solo en el conjunto de productos comparables
+    ipc_general_final_a_guardar = 0.0
+    if total_valor_anterior_canasta_alimentos_comparable > 0:
+        variacion_total_directa_comparable = total_valor_actual_canasta_alimentos_comparable - total_valor_anterior_canasta_alimentos_comparable
+        ipc_general_final_a_guardar = (variacion_total_directa_comparable / total_valor_anterior_canasta_alimentos_comparable) * 100
+        resumen.append(f"\nIPC General Canasta Alimentos (Variación Diaria Directa Comparable): {ipc_general_final_a_guardar:+.2f}%")
+        resumen.append(f"  Valor Actual Canasta Comparable: ${total_valor_actual_canasta_alimentos_comparable:.2f}")
+        resumen.append(f"  Valor Anterior Canasta Comparable: ${total_valor_anterior_canasta_alimentos_comparable:.2f}")
     else:
-        ipc_general = 0.0
+        resumen.append("\nIPC General Canasta Alimentos (Variación Diaria Directa Comparable): No hay suficientes datos comparables para ayer.")
     
-    resumen.append(f"\nIPC General de la Canasta Básica (variación diaria): {ipc_general:.1f}%")
-    
-    return resumen, ipc_divisiones, ipc_general
+    return resumen, ipc_divisiones, ipc_general_final_a_guardar
 
 def guardar_datos(fecha_actual, total, ipc_general, ipc_divisiones, precios_por_division, precios, productos):
     """Guarda los datos en los archivos CSV."""
@@ -399,22 +378,44 @@ def main():
             print("\nVariaciones mensuales de la canasta básica de alimentos:")
             print("=" * 80)
             
-            # Agrupar por división para mostrar un resumen más compacto
-            resumen_por_division = variaciones_mensuales.groupby('Division').agg({
-                'Porcentaje': 'mean',
-                'Variacion': 'mean'
-            }).reset_index()
-            
-            for _, row in resumen_por_division.iterrows():
-                signo = "+" if row['Variacion'] > 0 else ""
-                print(f"\nDivisión: {row['Division']}")
-                print(f"Variación mensual promedio: {signo}{row['Porcentaje']:.2f}%")
-                print(f"Variación en pesos: {signo}${row['Variacion']:.2f}")
-                print("-" * 80)
+            if not variaciones_mensuales.empty:
+                # Para el resumen en texto, calculamos la variación ponderada por división
+                # Necesitamos las cantidades mensuales de 'productos' (cargados de mi_carrito.txt)
+                map_producto_cantidad = {p["nombre"]: p["cantidad_mensual"] for p in productos}
+
+                variaciones_mensuales['Costo_Primer_Dia_Mes'] = variaciones_mensuales.apply(
+                    lambda row: row['Precio_Primer_Dia'] * map_producto_cantidad.get(row['Producto'], 0), axis=1
+                )
+                variaciones_mensuales['Costo_Ultimo_Dia_Mes'] = variaciones_mensuales.apply(
+                    lambda row: row['Precio_Ultimo_Dia'] * map_producto_cantidad.get(row['Producto'], 0), axis=1
+                )
+
+                resumen_mensual_division_costos = variaciones_mensuales.groupby('Division').agg(
+                    Total_Costo_Primer_Dia_Mes=('Costo_Primer_Dia_Mes', 'sum'),
+                    Total_Costo_Ultimo_Dia_Mes=('Costo_Ultimo_Dia_Mes', 'sum')
+                ).reset_index()
+
+                resumen_mensual_division_costos['Variacion_Absoluta_Division_Mes'] = resumen_mensual_division_costos['Total_Costo_Ultimo_Dia_Mes'] - resumen_mensual_division_costos['Total_Costo_Primer_Dia_Mes']
+                
+                def calcular_porcentaje_seguro(row):
+                    if row['Total_Costo_Primer_Dia_Mes'] != 0:
+                        return (row['Variacion_Absoluta_Division_Mes'] / row['Total_Costo_Primer_Dia_Mes']) * 100
+                    return 0.0
+
+                resumen_mensual_division_costos['Porcentaje_Ponderado_Division_Mes'] = resumen_mensual_division_costos.apply(calcular_porcentaje_seguro, axis=1)
+                
+                resumen.append("\nVariaciones Mensuales Ponderadas por División (Intra-Mes: Fin vs Inicio):")
+                for _, row_div in resumen_mensual_division_costos.iterrows():
+                    signo_porc = "+" if row_div['Porcentaje_Ponderado_Division_Mes'] >= 0 else ""
+                    signo_abs = "+" if row_div['Variacion_Absoluta_Division_Mes'] >= 0 else ""
+                    resumen.append(f"\n- División: {row_div['Division']}")
+                    resumen.append(f"  Variación ponderada: {signo_porc}{row_div['Porcentaje_Ponderado_Division_Mes']:.2f}%")
+                    resumen.append(f"  Variación absoluta (costo canasta división): {signo_abs}${row_div['Variacion_Absoluta_Division_Mes']:.2f}")
+            else:
+                resumen.append("\nNo hay suficientes datos para el resumen de variación mensual por división este mes.")
                 
         except Exception as e:
-            print(f"\nError al calcular variaciones mensuales: {e}")
-            print("Se necesitan al menos dos meses de datos.")
+            print(f"\nError al calcular o resumir variaciones mensuales: {e}")
     else:
         print("No se pudo obtener el precio de ningún producto.")
 
