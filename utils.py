@@ -157,6 +157,7 @@ def calcular_variacion_semanal(df_productos):
 def calcular_variacion_mensual(df_productos):
     """
     Calcula la variación mensual de precios para la canasta básica de alimentos.
+    Solo considera los productos del carrito del usuario.
     
     Args:
         df_productos: DataFrame con los precios históricos
@@ -181,6 +182,7 @@ def calcular_variacion_mensual(df_productos):
         "Bebidas"
     ]
     
+    # Filtrar solo productos de alimentos básicos
     df_alimentos = df_productos[df_productos['Division'].isin(divisiones_alimentos)]
     
     # Calcular el promedio mensual por producto

@@ -118,7 +118,7 @@ def obtener_precios(productos):
     return precios, precios_por_division, cantidades_por_division, total
 
 def generar_resumen(precios, precios_por_division, cantidades_por_division, total, df_productos, productos):
-    """Genera el resumen de precios y variaciones."""
+    """Genera el resumen de precios y variaciones de la canasta básica de alimentos."""
     resumen = []
     fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M')
     
@@ -127,46 +127,57 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
     for producto, precio in precios.items():
         resumen.append(f"- {producto}: ${precio:.2f}")
     
-    resumen.append(f"\nValor total de la canasta: ${total:.2f}")
+    resumen.append(f"\nValor total de la canasta básica: ${total:.2f}")
     resumen.append(f"Cantidad de productos: {len(precios)}")
     
-    # Calcular IPC por división
+    # Definir divisiones de alimentos básicos
+    divisiones_alimentos = [
+        "Alimentos y bebidas no alcohólicas",
+        "Pan y cereales",
+        "Panificados",
+        "Almacén",
+        "Frescos",
+        "Bebidas"
+    ]
+    
+    # Calcular IPC por división (solo alimentos básicos)
     resumen.append("\nIPC por División (variación diaria):")
     ipc_divisiones = {}
     total_por_division = {}
     
     for division, peso in DIVISIONES_IPC.items():
-        precios_actuales = precios_por_division.get(division, [])
-        cantidades_actuales = cantidades_por_division.get(division, [])
-        if precios_actuales and cantidades_actuales:
-            precios_anteriores = []
-            cantidades_anteriores = []
-            for producto in productos:
-                if producto["division"] == division:
-                    producto_anterior = df_productos[
-                        (df_productos["Producto"] == producto["nombre"]) & 
-                        (df_productos["Fecha"] == df_productos["Fecha"].max())
-                    ] if not df_productos.empty else pd.DataFrame()
-                    
-                    if not producto_anterior.empty:
-                        precio_anterior = producto_anterior.iloc[0]["Precio"]
-                        if precio_anterior is not None:
-                            precios_anteriores.append(precio_anterior)
-                            cantidades_anteriores.append(producto["cantidad_mensual"])
-            
-            if precios_anteriores and cantidades_anteriores:
-                precio_promedio_actual = sum(precios_actuales) / sum(cantidades_actuales)
-                precio_promedio_anterior = sum(precios_anteriores) / sum(cantidades_anteriores)
+        if division in divisiones_alimentos:
+            precios_actuales = precios_por_division.get(division, [])
+            cantidades_actuales = cantidades_por_division.get(division, [])
+            if precios_actuales and cantidades_actuales:
+                precios_anteriores = []
+                cantidades_anteriores = []
+                for producto in productos:
+                    if producto["division"] == division:
+                        producto_anterior = df_productos[
+                            (df_productos["Producto"] == producto["nombre"]) & 
+                            (df_productos["Fecha"] == df_productos["Fecha"].max())
+                        ] if not df_productos.empty else pd.DataFrame()
+                        
+                        if not producto_anterior.empty:
+                            precio_anterior = producto_anterior.iloc[0]["Precio"]
+                            if precio_anterior is not None:
+                                precios_anteriores.append(precio_anterior)
+                                cantidades_anteriores.append(producto["cantidad_mensual"])
                 
-                variacion_promedio = precio_promedio_actual - precio_promedio_anterior
-                porcentaje = (variacion_promedio / precio_promedio_anterior) * 100
-                ipc_divisiones[division] = porcentaje
-                total_por_division[division] = sum(precios_actuales)
-                signo = "+" if variacion_promedio > 0 else ""
-                resumen.append(f"- {division}: {signo}{porcentaje:.1f}% (Peso: {peso*100:.1f}%)")
+                if precios_anteriores and cantidades_anteriores:
+                    precio_promedio_actual = sum(precios_actuales) / sum(cantidades_actuales)
+                    precio_promedio_anterior = sum(precios_anteriores) / sum(cantidades_anteriores)
+                    
+                    variacion_promedio = precio_promedio_actual - precio_promedio_anterior
+                    porcentaje = (variacion_promedio / precio_promedio_anterior) * 100
+                    ipc_divisiones[division] = porcentaje
+                    total_por_division[division] = sum(precios_actuales)
+                    signo = "+" if variacion_promedio > 0 else ""
+                    resumen.append(f"- {division}: {signo}{porcentaje:.1f}% (Peso: {peso*100:.1f}%)")
     
-    # Calcular IPC general ponderado
-    divisiones_con_datos = {div: ipc for div, ipc in ipc_divisiones.items() if ipc is not None}
+    # Calcular IPC general ponderado (solo alimentos básicos)
+    divisiones_con_datos = {div: ipc for div, ipc in ipc_divisiones.items() if ipc is not None and div in divisiones_alimentos}
     if divisiones_con_datos:
         # Calcular el peso total de las divisiones con datos
         peso_total = sum(DIVISIONES_IPC[div] for div in divisiones_con_datos.keys())
@@ -196,7 +207,7 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
     else:
         ipc_general = 0.0
     
-    resumen.append(f"\nIPC General (variación diaria): {ipc_general:.1f}%")
+    resumen.append(f"\nIPC General de la Canasta Básica (variación diaria): {ipc_general:.1f}%")
     
     return resumen, ipc_divisiones, ipc_general
 
