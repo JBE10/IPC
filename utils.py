@@ -152,4 +152,63 @@ def calcular_variacion_semanal(df_productos):
                 'Porcentaje': porcentaje
             })
     
+    return pd.DataFrame(variaciones)
+
+def calcular_variacion_mensual(df_productos):
+    """
+    Calcula la variación mensual de precios para la canasta básica de alimentos.
+    
+    Args:
+        df_productos: DataFrame con los precios históricos
+        
+    Returns:
+        DataFrame con la variación mensual por producto y división
+    """
+    # Convertir la columna Fecha a datetime
+    df_productos['Fecha'] = pd.to_datetime(df_productos['Fecha'])
+    
+    # Agregar columnas de año y mes
+    df_productos['Año'] = df_productos['Fecha'].dt.year
+    df_productos['Mes'] = df_productos['Fecha'].dt.month
+    
+    # Filtrar solo las divisiones de alimentos básicos
+    divisiones_alimentos = [
+        "Alimentos y bebidas no alcohólicas",
+        "Pan y cereales",
+        "Panificados",
+        "Almacén",
+        "Frescos",
+        "Bebidas"
+    ]
+    
+    df_alimentos = df_productos[df_productos['Division'].isin(divisiones_alimentos)]
+    
+    # Calcular el promedio mensual por producto
+    promedios_mensuales = df_alimentos.groupby(['Producto', 'Division', 'Año', 'Mes'])['Precio'].mean().reset_index()
+    
+    # Ordenar por producto y mes
+    promedios_mensuales = promedios_mensuales.sort_values(['Producto', 'Año', 'Mes'])
+    
+    # Calcular la variación mensual
+    variaciones = []
+    for producto in promedios_mensuales['Producto'].unique():
+        df_producto = promedios_mensuales[promedios_mensuales['Producto'] == producto]
+        
+        for i in range(1, len(df_producto)):
+            precio_actual = df_producto.iloc[i]['Precio']
+            precio_anterior = df_producto.iloc[i-1]['Precio']
+            variacion = precio_actual - precio_anterior
+            porcentaje = (variacion / precio_anterior) * 100
+            
+            variaciones.append({
+                'Producto': producto,
+                'Division': df_producto.iloc[i]['Division'],
+                'Mes_Actual': df_producto.iloc[i]['Mes'],
+                'Año_Actual': df_producto.iloc[i]['Año'],
+                'Precio_Promedio_Actual': precio_actual,
+                'Precio_Promedio_Anterior': precio_anterior,
+                'Variacion': variacion,
+                'Porcentaje': porcentaje
+            })
+    
     return pd.DataFrame(variaciones) 

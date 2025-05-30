@@ -15,7 +15,9 @@ from utils import (
     es_primer_dia_del_mes,
     crear_nuevo_mes_csv,
     obtener_ultimos_csvs,
-    validar_division
+    validar_division,
+    calcular_variacion_semanal,
+    calcular_variacion_mensual
 )
 from scrapers import (
     obtener_precio_dia,
@@ -161,7 +163,17 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
                 resumen.append(f"- {division}: {signo}{porcentaje:.1f}% (Peso: {peso*100:.1f}%)")
     
     # Calcular IPC general ponderado
-    ipc_general = sum(ipc * peso for ipc, peso in zip(ipc_divisiones.values(), DIVISIONES_IPC.values()))
+    divisiones_con_datos = {div: ipc for div, ipc in ipc_divisiones.items() if ipc is not None}
+    if divisiones_con_datos:
+        # Calcular el peso total de las divisiones con datos
+        peso_total = sum(DIVISIONES_IPC[div] for div in divisiones_con_datos.keys())
+        # Normalizar los pesos para que sumen 1
+        pesos_normalizados = {div: DIVISIONES_IPC[div]/peso_total for div in divisiones_con_datos.keys()}
+        # Calcular IPC general ponderado
+        ipc_general = sum(ipc * pesos_normalizados[div] for div, ipc in divisiones_con_datos.items())
+    else:
+        ipc_general = 0.0
+    
     resumen.append(f"\nIPC General (variación diaria): {ipc_general:.1f}%")
     
     return resumen, ipc_divisiones, ipc_general
@@ -332,6 +344,35 @@ def main():
         except Exception as e:
             print(f"\nError al calcular variaciones semanales: {e}")
             print("Se necesitan al menos dos semanas de datos.")
+            
+        # Calcular variación mensual
+        try:
+            # Calcular variación mensual
+            variaciones_mensuales = calcular_variacion_mensual(df_productos)
+            
+            # Guardar variaciones mensuales
+            variaciones_mensuales.to_csv(f"variaciones_mensuales_{datetime.now().strftime('%Y%m')}.csv", index=False)
+            
+            # Mostrar resumen de variaciones mensuales
+            print("\nVariaciones mensuales de la canasta básica de alimentos:")
+            print("=" * 80)
+            
+            # Agrupar por división para mostrar un resumen más compacto
+            resumen_por_division = variaciones_mensuales.groupby('Division').agg({
+                'Porcentaje': 'mean',
+                'Variacion': 'mean'
+            }).reset_index()
+            
+            for _, row in resumen_por_division.iterrows():
+                signo = "+" if row['Variacion'] > 0 else ""
+                print(f"\nDivisión: {row['Division']}")
+                print(f"Variación mensual promedio: {signo}{row['Porcentaje']:.2f}%")
+                print(f"Variación en pesos: {signo}${row['Variacion']:.2f}")
+                print("-" * 80)
+                
+        except Exception as e:
+            print(f"\nError al calcular variaciones mensuales: {e}")
+            print("Se necesitan al menos dos meses de datos.")
     else:
         print("No se pudo obtener el precio de ningún producto.")
 
@@ -346,6 +387,8 @@ def main():
     print(f"- resumen_{datetime.now().strftime('%Y%m')}.csv")
     print(f"- divisiones_{datetime.now().strftime('%Y%m')}.csv")
     print(f"- productos_{datetime.now().strftime('%Y%m')}.csv")
+    print(f"- variaciones_semanales_{datetime.now().strftime('%Y%m')}.csv")
+    print(f"- variaciones_mensuales_{datetime.now().strftime('%Y%m')}.csv")
 
 if __name__ == "__main__":
     main()
