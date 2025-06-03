@@ -168,9 +168,14 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
                         valor_anterior_division_comparable += precio_total_anterior_producto
                         productos_contados_en_division += 1
         
-        if productos_contados_en_division > 0 and valor_anterior_division_comparable > 0:
+        if productos_contados_en_division > 0:
             variacion_division_comparable = valor_actual_division_comparable - valor_anterior_division_comparable
-            porcentaje_division_comparable = (variacion_division_comparable / valor_anterior_division_comparable) * 100
+            
+            if valor_anterior_division_comparable != 0:
+                porcentaje_division_comparable = (variacion_division_comparable / valor_anterior_division_comparable) * 100
+            else:
+                porcentaje_division_comparable = 0
+                
             ipc_divisiones[division_cfg] = porcentaje_division_comparable
             signo = "+" if variacion_division_comparable >= 0 else ""
             resumen.append(f"- {division_cfg}: {signo}{porcentaje_division_comparable:.2f}% (sobre {productos_contados_en_division} prod. comparables)")
@@ -183,7 +188,7 @@ def generar_resumen(precios, precios_por_division, cantidades_por_division, tota
     
     # Calcular IPC general basado solo en el conjunto de productos comparables
     ipc_general_final_a_guardar = 0.0
-    if total_valor_anterior_canasta_alimentos_comparable > 0:
+    if total_valor_anterior_canasta_alimentos_comparable != 0:
         variacion_total_directa_comparable = total_valor_actual_canasta_alimentos_comparable - total_valor_anterior_canasta_alimentos_comparable
         ipc_general_final_a_guardar = (variacion_total_directa_comparable / total_valor_anterior_canasta_alimentos_comparable) * 100
         resumen.append(f"\nIPC General Canasta Alimentos (Variación Diaria Directa Comparable): {ipc_general_final_a_guardar:+.2f}%")

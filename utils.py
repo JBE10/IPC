@@ -140,7 +140,11 @@ def calcular_variacion_semanal(df_productos):
             precio_actual = df_producto.iloc[i]['Precio']
             precio_anterior = df_producto.iloc[i-1]['Precio']
             variacion = precio_actual - precio_anterior
-            porcentaje = (variacion / precio_anterior) * 100
+            
+            if precio_anterior != 0:
+                porcentaje = (variacion / precio_anterior) * 100
+            else:
+                porcentaje = 0
             
             variaciones.append({
                 'Producto': producto,
@@ -213,7 +217,11 @@ def calcular_variacion_mensual(df_productos):
             precio_actual = ultimo_dato['Precio']
             precio_anterior = primer_dato['Precio']
             variacion = precio_actual - precio_anterior
-            porcentaje = (variacion / precio_anterior) * 100
+            
+            if precio_anterior != 0:
+                porcentaje = (variacion / precio_anterior) * 100
+            else:
+                porcentaje = 0
             
             variaciones.append({
                 'Producto': producto,
