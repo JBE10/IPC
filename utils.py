@@ -234,4 +234,66 @@ def calcular_variacion_mensual(df_productos):
                 'Porcentaje': porcentaje
             })
     
-    return pd.DataFrame(variaciones) 
+    return pd.DataFrame(variaciones)
+
+
+def calcular_variacion_mensual_intermensual(df_productos):
+    """Calcula la variación mensual comparando el promedio de precios del mes
+    actual con el promedio del mes anterior para la canasta básica
+    alimentaria."""
+
+    df_productos['Fecha'] = pd.to_datetime(df_productos['Fecha'])
+
+    df_productos['Año'] = df_productos['Fecha'].dt.year
+    df_productos['Mes'] = df_productos['Fecha'].dt.month
+
+    divisiones_alimentos = [
+        "Alimentos y bebidas no alcohólicas",
+        "Pan y cereales",
+        "Panificados",
+        "Almacén",
+        "Frescos",
+        "Bebidas",
+    ]
+
+    df_alimentos = df_productos[df_productos['Division'].isin(divisiones_alimentos)]
+
+    fecha_actual = datetime.now()
+    mes_actual = fecha_actual.month
+    año_actual = fecha_actual.year
+
+    fecha_mes_anterior = fecha_actual - pd.DateOffset(months=1)
+    mes_anterior = fecha_mes_anterior.month
+    año_anterior = fecha_mes_anterior.year
+
+    df_mes_actual = df_alimentos[(df_alimentos['Mes'] == mes_actual) & (df_alimentos['Año'] == año_actual)]
+    df_mes_anterior = df_alimentos[(df_alimentos['Mes'] == mes_anterior) & (df_alimentos['Año'] == año_anterior)]
+
+    if df_mes_actual.empty or df_mes_anterior.empty:
+        return pd.DataFrame()
+
+    promedio_actual = df_mes_actual.groupby('Producto')['Precio'].mean()
+    promedio_anterior = df_mes_anterior.groupby('Producto')['Precio'].mean()
+
+    productos_comunes = promedio_actual.index.intersection(promedio_anterior.index)
+
+    variaciones = []
+    for producto in productos_comunes:
+        precio_actual = promedio_actual[producto]
+        precio_anterior = promedio_anterior[producto]
+        variacion = precio_actual - precio_anterior
+        porcentaje = (variacion / precio_anterior) * 100 if precio_anterior != 0 else 0
+        division = df_mes_actual[df_mes_actual['Producto'] == producto].iloc[0]['Division']
+
+        variaciones.append({
+            'Producto': producto,
+            'Division': division,
+            'Mes_Actual': mes_actual,
+            'Año_Actual': año_actual,
+            'Precio_Promedio_Anterior': precio_anterior,
+            'Precio_Promedio_Actual': precio_actual,
+            'Variacion': variacion,
+            'Porcentaje': porcentaje,
+        })
+
+    return pd.DataFrame(variaciones)
