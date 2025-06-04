@@ -18,6 +18,7 @@ from utils import (
     validar_division,
     calcular_variacion_semanal,
     calcular_variacion_mensual,
+    calcular_variacion_mensual_intermensual,
     limpiar_precio
 )
 from scrapers import (
@@ -373,8 +374,8 @@ def main():
             
         # Calcular variación mensual
         try:
-            # Calcular variación mensual
-            variaciones_mensuales = calcular_variacion_mensual(df_productos)
+            # Calcular variación mensual intermensual (mes actual vs mes anterior)
+            variaciones_mensuales = calcular_variacion_mensual_intermensual(df_productos)
             
             # Guardar variaciones mensuales
             variaciones_mensuales.to_csv(f"variaciones_mensuales_{datetime.now().strftime('%Y%m')}.csv", index=False)
@@ -388,28 +389,28 @@ def main():
                 # Necesitamos las cantidades mensuales de 'productos' (cargados de mi_carrito.txt)
                 map_producto_cantidad = {p["nombre"]: p["cantidad_mensual"] for p in productos}
 
-                variaciones_mensuales['Costo_Primer_Dia_Mes'] = variaciones_mensuales.apply(
-                    lambda row: row['Precio_Primer_Dia'] * map_producto_cantidad.get(row['Producto'], 0), axis=1
+                variaciones_mensuales['Costo_Mes_Anterior'] = variaciones_mensuales.apply(
+                    lambda row: row['Precio_Promedio_Anterior'] * map_producto_cantidad.get(row['Producto'], 0), axis=1
                 )
-                variaciones_mensuales['Costo_Ultimo_Dia_Mes'] = variaciones_mensuales.apply(
-                    lambda row: row['Precio_Ultimo_Dia'] * map_producto_cantidad.get(row['Producto'], 0), axis=1
+                variaciones_mensuales['Costo_Mes_Actual'] = variaciones_mensuales.apply(
+                    lambda row: row['Precio_Promedio_Actual'] * map_producto_cantidad.get(row['Producto'], 0), axis=1
                 )
 
                 resumen_mensual_division_costos = variaciones_mensuales.groupby('Division').agg(
-                    Total_Costo_Primer_Dia_Mes=('Costo_Primer_Dia_Mes', 'sum'),
-                    Total_Costo_Ultimo_Dia_Mes=('Costo_Ultimo_Dia_Mes', 'sum')
+                    Total_Costo_Mes_Anterior=('Costo_Mes_Anterior', 'sum'),
+                    Total_Costo_Mes_Actual=('Costo_Mes_Actual', 'sum')
                 ).reset_index()
 
-                resumen_mensual_division_costos['Variacion_Absoluta_Division_Mes'] = resumen_mensual_division_costos['Total_Costo_Ultimo_Dia_Mes'] - resumen_mensual_division_costos['Total_Costo_Primer_Dia_Mes']
+                resumen_mensual_division_costos['Variacion_Absoluta_Division_Mes'] = resumen_mensual_division_costos['Total_Costo_Mes_Actual'] - resumen_mensual_division_costos['Total_Costo_Mes_Anterior']
                 
                 def calcular_porcentaje_seguro(row):
-                    if row['Total_Costo_Primer_Dia_Mes'] != 0:
-                        return (row['Variacion_Absoluta_Division_Mes'] / row['Total_Costo_Primer_Dia_Mes']) * 100
+                    if row['Total_Costo_Mes_Anterior'] != 0:
+                        return (row['Variacion_Absoluta_Division_Mes'] / row['Total_Costo_Mes_Anterior']) * 100
                     return 0.0
 
                 resumen_mensual_division_costos['Porcentaje_Ponderado_Division_Mes'] = resumen_mensual_division_costos.apply(calcular_porcentaje_seguro, axis=1)
                 
-                resumen.append("\nVariaciones Mensuales Ponderadas por División (Intra-Mes: Fin vs Inicio):")
+                resumen.append("\nVariaciones Mensuales Ponderadas por División (Inter-Mes: Actual vs Anterior):")
                 for _, row_div in resumen_mensual_division_costos.iterrows():
                     signo_porc = "+" if row_div['Porcentaje_Ponderado_Division_Mes'] >= 0 else ""
                     signo_abs = "+" if row_div['Variacion_Absoluta_Division_Mes'] >= 0 else ""
