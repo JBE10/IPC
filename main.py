@@ -439,6 +439,15 @@ def main():
     print(f"- variaciones_semanales_{datetime.now().strftime('%Y%m')}.csv")
     print(f"- variaciones_mensuales_{datetime.now().strftime('%Y%m')}.csv")
 
+    # Generar resumen Pro
+    try:
+        import resumen_pro_202506
+        resumen_pro_202506.generar_resumen_pro()
+        print(f"- resumen_pro_{datetime.now().strftime('%Y%m')}.txt")
+        print(f"- resumen_pro_{datetime.now().strftime('%Y%m')}.csv")
+    except Exception as e:
+        print(f"\nError al generar resumen Pro: {e}")
+
 if __name__ == "__main__":
     main()
 
