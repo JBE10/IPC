@@ -643,7 +643,7 @@ Fecha,Producto,Division,Precio,Variacion,Porcentaje
 2025-06-11 10:52,Yerba Mate Taragüi 4 Flex 500 Gr.,Almacén,4500.0,0.0,0.0
 2025-06-11 10:52,Pan Mignon 250 Gr,Panificados,918.0,0.0,0.0
 2025-06-11 10:52,Vainillas DIA 148 Gr.,Panificados,2500.0,0.0,0.0
-2025-06-11 10:52,Harina de Trigo 000 DIA 1 Kg,Almacén,1080.0,-500.0,-31.645569620253166
+2025-06-11 10:52,Harina de Trigo 000 DIA 1 Kg,Almacén,1080.0,-500.0,-31.64556962025317
 2025-06-11 10:52,Polenta Prestopronta 500 Gr.,Almacén,900.0,-425.0,-32.075471698113205
 2025-06-11 10:52,Fideos Tirabuzón Favorita 500 Gr,Almacén,3580.0,0.0,0.0
 2025-06-11 10:52,Dulce de Batata Emeth 500 Gr,Almacén,2500.0,0.0,0.0
@@ -659,3 +659,58 @@ Fecha,Producto,Division,Precio,Variacion,Porcentaje
 2025-06-11 10:52,Caldo De Verdura Maggi x 12 Ud.,Almacén,1480.0,0.0,0.0
 2025-06-11 10:52,Arveja Congelada DIA 350 Gr,Almacén,2590.0,0.0,0.0
 2025-06-11 10:52,"Jugo en Polvo Light Dia 7,5 Gr",Bebidas alcohólicas y tabaco,280.0,0.0,0.0
+2025-06-12 11:41,Galletita de Agua Cracker Dia 101 Gr,Panificados,2350.0,0.0,0.0
+2025-06-12 11:41,Arroz Largo Fino Molinos Ala 500 Gr.,Almacén,3120.0,0.0,0.0
+2025-06-12 11:41,Papa Negra x 1 Kg,Frescos,4130.0,0.0,0.0
+2025-06-12 11:41,Batata x 1 Kg,Frescos,990.0,0.0,0.0
+2025-06-12 11:41,Azúcar Plus DIA Común tipo A 1 Kg,Almacén,1980.0,0.0,0.0
+2025-06-12 11:41,Dulce de Leche Clásico La Serenísima con calcio 400 Gr,Almacén,3135.0,0.0,0.0
+2025-06-12 11:41,Acelga x 1 Kg,Frescos,3090.0,0.0,0.0
+2025-06-12 11:41,Cebolla Morada x 1 Kg,Frescos,3380.0,0.0,0.0
+2025-06-12 11:41,Lechuga Mantecosa x 1 Kg,Frescos,4690.0,0.0,0.0
+2025-06-12 11:41,Tomate Perita x 1 Kg,Frescos,5380.0,0.0,0.0
+2025-06-12 11:41,Zanahoria x 1 Kg,Frescos,2580.0,0.0,0.0
+2025-06-12 11:41,Zapallo x 1 Kg,Frescos,790.0,0.0,0.0
+2025-06-12 11:41,Manzana Roja x 1 Kg,Frescos,5380.0,0.0,0.0
+2025-06-12 11:41,Mandarina x 1 Kg,Frescos,1780.0,0.0,0.0
+2025-06-12 11:41,Naranja Jugo x 1 Kg,Frescos,1780.0,0.0,0.0
+2025-06-12 11:41,Banana x 1 Kg,Frescos,3580.0,0.0,0.0
+2025-06-12 11:41,Pera x 1 Kg,Frescos,1690.0,0.0,0.0
+2025-06-12 11:41,Asado x Kg,Frescos,13600.0,0.0,0.0
+2025-06-12 11:41,Carnaza Comun x Kg,Frescos,10500.0,0.0,0.0
+2025-06-12 11:41,Paleta en Churrasco Envasado al Vacío x 1 Kg.,Frescos,14100.0,0.0,0.0
+2025-06-12 11:41,Carne picada Especial Atmósfera Modificada 500 Gr,Frescos,14000.0,0.0,0.0
+2025-06-12 11:41,Milanesa De Nalga Carnes De La Estancia Envasado Al Vacío X 1 Kg,Frescos,8450.0,0.0,0.0
+2025-06-12 11:41,Pollo Entero x 1 Kg (precio por kg),Frescos,2990.0,0.0,0.0
+2025-06-12 11:41,Filet de Merluza Rebozado a la Romana Dia 500 Gr (Carne de pescado - opción rebozada),Frescos,9990.0,0.0,0.0
+2025-06-12 11:41,Leche Entera DIA Sachet 1 Lt.,Frescos,11900.0,0.0,0.0
+2025-06-12 11:41,Queso Crema DIA Normandia 290 Gr.,Frescos,2990.0,0.0,0.0
+2025-06-12 11:41,Queso Cremoso Dia X Kg. (Proxy para Queso Cuartirolo),Frescos,12890.0,0.0,0.0
+2025-06-12 11:41,Queso Rallado DIA 150 Gr,Frescos,4700.0,0.0,0.0
+2025-06-12 11:41,"Yogur Bebible Frutilla La Serenisima 1,1 Lt.",Frescos,4780.0,0.0,0.0
+2025-06-12 11:41,"Aceite de Girasol Natura 1,5 Lt.",Almacén,4470.0,0.0,0.0
+2025-06-12 11:41,Gaseosa Coca-Cola Sabor Original 2.25 Lt.,Bebidas alcohólicas y tabaco,8800.0,0.0,0.0
+2025-06-12 11:41,Sifon De Soda Sin Tacc Dia 2 Lt.,Bebidas alcohólicas y tabaco,2000.0,0.0,0.0
+2025-06-12 11:41,Cerveza Lager Oslava 1 Lt.,Bebidas alcohólicas y tabaco,3380.0,0.0,0.0
+2025-06-12 11:41,Sal Fina en Paquete Celusal 500 Gr.,Almacén,1200.0,0.0,0.0
+2025-06-12 11:41,Vinagre de Alcohol Dia 1 Lt.,Almacén,1050.0,0.0,0.0
+2025-06-12 11:41,Dolca Suave Nescafé x 100 Gr. (Instantáneo),Almacén,7190.0,0.0,0.0
+2025-06-12 11:41,Yerba Mate Taragüi 4 Flex 500 Gr.,Almacén,4500.0,0.0,0.0
+2025-06-12 11:41,Pan Mignon 250 Gr,Panificados,918.0,0.0,0.0
+2025-06-12 11:41,Vainillas DIA 148 Gr.,Panificados,2500.0,0.0,0.0
+2025-06-12 11:41,Harina de Trigo 000 DIA 1 Kg,Almacén,1080.0,0.0,0.0
+2025-06-12 11:41,Polenta Prestopronta 500 Gr.,Almacén,900.0,0.0,0.0
+2025-06-12 11:41,Fideos Tirabuzón Favorita 500 Gr,Almacén,3580.0,0.0,0.0
+2025-06-12 11:41,Dulce de Batata Emeth 500 Gr,Almacén,2500.0,0.0,0.0
+2025-06-12 11:41,Mermelada BC Durazno 390 Gr,Almacén,3175.0,0.0,0.0
+2025-06-12 11:41,Lentejas Dia 400 Gr,Almacén,2100.0,0.0,0.0
+2025-06-12 11:41,Puré de Tomate Dia 520 Gr.,Almacén,490.0,0.0,0.0
+2025-06-12 11:41,Jamón Cocido Fetas Finas Dia 200 Gr (Ejemplo para Paleta Cocida),Frescos,4290.0,0.0,0.0
+2025-06-12 11:41,Salamín Cagnoli Picado Grueso 145 Gr (Ejemplo para Salame),Frescos,5290.0,0.0,0.0
+2025-06-12 11:41,Huevo Blanco Grande x 12 unidades,Frescos,7980.0,0.0,0.0
+2025-06-12 11:41,Manteca DIA Calidad Extra 200 Gr,Frescos,3100.0,0.0,0.0
+2025-06-12 11:41,Vino Tinto Cabernet Buenos Aires 750 Ml.,Bebidas alcohólicas y tabaco,4700.0,0.0,0.0
+2025-06-12 11:41,Mayonesa DIA 220 Ml.,Almacén,725.0,0.0,0.0
+2025-06-12 11:41,Caldo De Verdura Maggi x 12 Ud.,Almacén,1480.0,0.0,0.0
+2025-06-12 11:41,Arveja Congelada DIA 350 Gr,Almacén,2590.0,0.0,0.0
+2025-06-12 11:41,"Jugo en Polvo Light Dia 7,5 Gr",Bebidas alcohólicas y tabaco,280.0,0.0,0.0
