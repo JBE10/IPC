@@ -1,111 +1,166 @@
 Producto,Semana_Actual,Año_Actual,Precio_Promedio_Actual,Precio_Promedio_Anterior,Variacion,Porcentaje
 "Aceite de Girasol Natura 1,5 Lt.",23,2025,4470.0,4470.0,0.0,0.0
 "Aceite de Girasol Natura 1,5 Lt.",24,2025,4470.0,4470.0,0.0,0.0
+"Aceite de Girasol Natura 1,5 Lt.",25,2025,4470.0,4470.0,0.0,0.0
 Acelga x 1 Kg,23,2025,3090.0,3090.0,0.0,0.0
 Acelga x 1 Kg,24,2025,3090.0,3090.0,0.0,0.0
+Acelga x 1 Kg,25,2025,3090.0,3090.0,0.0,0.0
 Arroz Largo Fino Molinos Ala 500 Gr.,23,2025,3120.0,3120.0,0.0,0.0
 Arroz Largo Fino Molinos Ala 500 Gr.,24,2025,3120.0,3120.0,0.0,0.0
+Arroz Largo Fino Molinos Ala 500 Gr.,25,2025,3120.0,3120.0,0.0,0.0
 Arveja Congelada DIA 350 Gr,23,2025,2440.0,1990.0,450.0,22.613065326633166
 Arveja Congelada DIA 350 Gr,24,2025,2590.0,2440.0,150.0,6.147540983606557
+Arveja Congelada DIA 350 Gr,25,2025,2590.0,2590.0,0.0,0.0
 Asado x Kg,23,2025,13600.0,13600.0,0.0,0.0
 Asado x Kg,24,2025,13600.0,13600.0,0.0,0.0
+Asado x Kg,25,2025,13600.0,13600.0,0.0,0.0
 Azúcar Plus DIA Común tipo A 1 Kg,23,2025,1680.0,1980.0,-300.0,-15.151515151515152
 Azúcar Plus DIA Común tipo A 1 Kg,24,2025,1900.0,1680.0,220.0,13.095238095238097
+Azúcar Plus DIA Común tipo A 1 Kg,25,2025,1980.0,1900.0,80.0,4.2105263157894735
 Banana x 1 Kg,23,2025,3930.0,3980.0,-50.0,-1.256281407035176
 Banana x 1 Kg,24,2025,3713.3333333333335,3930.0,-216.66666666666652,-5.5131467345207765
+Banana x 1 Kg,25,2025,3980.0,3713.3333333333335,266.6666666666665,7.181328545780966
 Batata x 1 Kg,23,2025,1215.0,1290.0,-75.0,-5.813953488372093
 Batata x 1 Kg,24,2025,1056.6666666666667,1215.0,-158.33333333333326,-13.0315500685871
+Batata x 1 Kg,25,2025,1190.0,1056.6666666666667,133.33333333333326,12.618296529968445
 Caldo De Verdura Maggi x 12 Ud.,23,2025,1480.0,1480.0,0.0,0.0
 Caldo De Verdura Maggi x 12 Ud.,24,2025,1480.0,1480.0,0.0,0.0
+Caldo De Verdura Maggi x 12 Ud.,25,2025,1480.0,1480.0,0.0,0.0
 Carnaza Comun x Kg,23,2025,10500.0,10500.0,0.0,0.0
 Carnaza Comun x Kg,24,2025,10500.0,10500.0,0.0,0.0
+Carnaza Comun x Kg,25,2025,10500.0,10500.0,0.0,0.0
 Carne picada Especial Atmósfera Modificada 500 Gr,23,2025,14000.0,14000.0,0.0,0.0
 Carne picada Especial Atmósfera Modificada 500 Gr,24,2025,14000.0,14000.0,0.0,0.0
+Carne picada Especial Atmósfera Modificada 500 Gr,25,2025,14000.0,14000.0,0.0,0.0
 Cebolla Morada x 1 Kg,23,2025,3380.0,3380.0,0.0,0.0
 Cebolla Morada x 1 Kg,24,2025,3113.3333333333335,3380.0,-266.6666666666665,-7.8895463510848085
+Cebolla Morada x 1 Kg,25,2025,2580.0,3113.3333333333335,-533.3333333333335,-17.13062098501071
 Cerveza Lager Oslava 1 Lt.,23,2025,3180.0,2580.0,600.0,23.25581395348837
 Cerveza Lager Oslava 1 Lt.,24,2025,3380.0,3180.0,200.0,6.289308176100629
+Cerveza Lager Oslava 1 Lt.,25,2025,3380.0,3380.0,0.0,0.0
 Dolca Suave Nescafé x 100 Gr. (Instantáneo),23,2025,7190.0,7190.0,0.0,0.0
 Dolca Suave Nescafé x 100 Gr. (Instantáneo),24,2025,7190.0,7190.0,0.0,0.0
+Dolca Suave Nescafé x 100 Gr. (Instantáneo),25,2025,7190.0,7190.0,0.0,0.0
 Dulce de Batata Emeth 500 Gr,23,2025,2500.0,2500.0,0.0,0.0
 Dulce de Batata Emeth 500 Gr,24,2025,2500.0,2500.0,0.0,0.0
+Dulce de Batata Emeth 500 Gr,25,2025,2500.0,2500.0,0.0,0.0
 Dulce de Leche Clásico La Serenísima con calcio 400 Gr,23,2025,3085.0,3135.0,-50.0,-1.5948963317384368
 Dulce de Leche Clásico La Serenísima con calcio 400 Gr,24,2025,3121.6666666666665,3085.0,36.666666666666515,1.1885467314964835
+Dulce de Leche Clásico La Serenísima con calcio 400 Gr,25,2025,3135.0,3121.6666666666665,13.333333333333485,0.4271222637480028
 Fideos Tirabuzón Favorita 500 Gr,23,2025,3435.0,3000.0,435.0,14.499999999999998
 Fideos Tirabuzón Favorita 500 Gr,24,2025,3580.0,3435.0,145.0,4.2212518195050945
+Fideos Tirabuzón Favorita 500 Gr,25,2025,3580.0,3580.0,0.0,0.0
 Filet de Merluza Rebozado a la Romana Dia 500 Gr (Carne de pescado - opción rebozada),23,2025,9990.0,9990.0,0.0,0.0
 Filet de Merluza Rebozado a la Romana Dia 500 Gr (Carne de pescado - opción rebozada),24,2025,9990.0,9990.0,0.0,0.0
+Filet de Merluza Rebozado a la Romana Dia 500 Gr (Carne de pescado - opción rebozada),25,2025,9990.0,9990.0,0.0,0.0
 Galletita de Agua Cracker Dia 101 Gr,23,2025,2156.25,1575.0,581.25,36.904761904761905
 Galletita de Agua Cracker Dia 101 Gr,24,2025,2350.0,2156.25,193.75,8.985507246376812
+Galletita de Agua Cracker Dia 101 Gr,25,2025,2350.0,2350.0,0.0,0.0
 Gaseosa Coca-Cola Sabor Original 2.25 Lt.,23,2025,8400.0,8400.0,0.0,0.0
 Gaseosa Coca-Cola Sabor Original 2.25 Lt.,24,2025,8733.333333333334,8400.0,333.33333333333394,3.9682539682539755
+Gaseosa Coca-Cola Sabor Original 2.25 Lt.,25,2025,8800.0,8733.333333333334,66.66666666666606,0.7633587786259473
 Harina de Trigo 000 DIA 1 Kg,23,2025,1580.0,1580.0,0.0,0.0
 Harina de Trigo 000 DIA 1 Kg,24,2025,1246.6666666666667,1580.0,-333.33333333333326,-21.097046413502106
+Harina de Trigo 000 DIA 1 Kg,25,2025,1080.0,1246.6666666666667,-166.66666666666674,-13.368983957219257
 Huevo Blanco Grande x 12 unidades,23,2025,7980.0,7980.0,0.0,0.0
 Huevo Blanco Grande x 12 unidades,24,2025,7980.0,7980.0,0.0,0.0
+Huevo Blanco Grande x 12 unidades,25,2025,7980.0,7980.0,0.0,0.0
 Jamón Cocido Fetas Finas Dia 200 Gr (Ejemplo para Paleta Cocida),23,2025,4056.25,3355.0,701.25,20.901639344262296
 Jamón Cocido Fetas Finas Dia 200 Gr (Ejemplo para Paleta Cocida),24,2025,4290.0,4056.25,233.75,5.762711864406779
+Jamón Cocido Fetas Finas Dia 200 Gr (Ejemplo para Paleta Cocida),25,2025,4290.0,4290.0,0.0,0.0
 "Jugo en Polvo Light Dia 7,5 Gr",23,2025,280.0,280.0,0.0,0.0
 "Jugo en Polvo Light Dia 7,5 Gr",24,2025,280.0,280.0,0.0,0.0
+"Jugo en Polvo Light Dia 7,5 Gr",25,2025,280.0,280.0,0.0,0.0
 Leche Entera DIA Sachet 1 Lt.,23,2025,13900.0,13900.0,0.0,0.0
 Leche Entera DIA Sachet 1 Lt.,24,2025,12566.666666666666,13900.0,-1333.333333333334,-9.592326139088733
+Leche Entera DIA Sachet 1 Lt.,25,2025,11900.0,12566.666666666666,-666.6666666666661,-5.305039787798404
 Lechuga Mantecosa x 1 Kg,23,2025,4790.0,4790.0,0.0,0.0
 Lechuga Mantecosa x 1 Kg,24,2025,4823.333333333333,4790.0,33.33333333333303,0.6958942240779339
+Lechuga Mantecosa x 1 Kg,25,2025,4990.0,4823.333333333333,166.66666666666697,3.4554250172771312
 Lentejas Dia 400 Gr,23,2025,2100.0,2100.0,0.0,0.0
 Lentejas Dia 400 Gr,24,2025,2100.0,2100.0,0.0,0.0
+Lentejas Dia 400 Gr,25,2025,2100.0,2100.0,0.0,0.0
 Mandarina x 1 Kg,23,2025,2430.0,2580.0,-150.0,-5.813953488372093
 Mandarina x 1 Kg,24,2025,1880.0,2430.0,-550.0,-22.633744855967077
+Mandarina x 1 Kg,25,2025,1980.0,1880.0,100.0,5.319148936170213
 Manteca DIA Calidad Extra 200 Gr,23,2025,3008.75,3000.0,8.75,0.2916666666666667
 Manteca DIA Calidad Extra 200 Gr,24,2025,3083.3333333333335,3008.75,74.58333333333348,2.4788810414070124
+Manteca DIA Calidad Extra 200 Gr,25,2025,3100.0,3083.3333333333335,16.666666666666515,0.5405405405405356
 Manzana Roja x 1 Kg,23,2025,5380.0,5380.0,0.0,0.0
 Manzana Roja x 1 Kg,24,2025,5413.333333333333,5380.0,33.33333333333303,0.619578686493179
+Manzana Roja x 1 Kg,25,2025,5580.0,5413.333333333333,166.66666666666697,3.0788177339901535
 Mayonesa DIA 220 Ml.,23,2025,725.0,725.0,0.0,0.0
 Mayonesa DIA 220 Ml.,24,2025,725.0,725.0,0.0,0.0
+Mayonesa DIA 220 Ml.,25,2025,725.0,725.0,0.0,0.0
 Mermelada BC Durazno 390 Gr,23,2025,3175.0,3175.0,0.0,0.0
 Mermelada BC Durazno 390 Gr,24,2025,3175.0,3175.0,0.0,0.0
+Mermelada BC Durazno 390 Gr,25,2025,3175.0,3175.0,0.0,0.0
 Milanesa De Nalga Carnes De La Estancia Envasado Al Vacío X 1 Kg,23,2025,8450.0,8450.0,0.0,0.0
 Milanesa De Nalga Carnes De La Estancia Envasado Al Vacío X 1 Kg,24,2025,8450.0,8450.0,0.0,0.0
+Milanesa De Nalga Carnes De La Estancia Envasado Al Vacío X 1 Kg,25,2025,8450.0,8450.0,0.0,0.0
 Naranja Jugo x 1 Kg,23,2025,2080.0,2580.0,-500.0,-19.379844961240313
 Naranja Jugo x 1 Kg,24,2025,1913.3333333333333,2080.0,-166.66666666666674,-8.012820512820516
+Naranja Jugo x 1 Kg,25,2025,1780.0,1913.3333333333333,-133.33333333333326,-6.968641114982575
 Paleta en Churrasco Envasado al Vacío x 1 Kg.,23,2025,14100.0,14100.0,0.0,0.0
 Paleta en Churrasco Envasado al Vacío x 1 Kg.,24,2025,14100.0,14100.0,0.0,0.0
+Paleta en Churrasco Envasado al Vacío x 1 Kg.,25,2025,14100.0,14100.0,0.0,0.0
 Pan Mignon 250 Gr,23,2025,918.0,918.0,0.0,0.0
 Pan Mignon 250 Gr,24,2025,918.0,918.0,0.0,0.0
+Pan Mignon 250 Gr,25,2025,918.0,918.0,0.0,0.0
 Papa Negra x 1 Kg,23,2025,4812.5,4550.0,262.5,5.769230769230769
 Papa Negra x 1 Kg,24,2025,4620.0,4812.5,-192.5,-4.0
+Papa Negra x 1 Kg,25,2025,4130.0,4620.0,-490.0,-10.606060606060606
 Pera x 1 Kg,23,2025,1690.0,1690.0,0.0,0.0
 Pera x 1 Kg,24,2025,1690.0,1690.0,0.0,0.0
+Pera x 1 Kg,25,2025,1690.0,1690.0,0.0,0.0
 Polenta Prestopronta 500 Gr.,23,2025,1325.0,1325.0,0.0,0.0
 Polenta Prestopronta 500 Gr.,24,2025,1041.6666666666667,1325.0,-283.33333333333326,-21.383647798742132
+Polenta Prestopronta 500 Gr.,25,2025,900.0,1041.6666666666667,-141.66666666666674,-13.600000000000007
 Pollo Entero x 1 Kg (precio por kg),23,2025,2990.0,2990.0,0.0,0.0
 Pollo Entero x 1 Kg (precio por kg),24,2025,2990.0,2990.0,0.0,0.0
+Pollo Entero x 1 Kg (precio por kg),25,2025,2990.0,2990.0,0.0,0.0
 Puré de Tomate Dia 520 Gr.,23,2025,790.0,790.0,0.0,0.0
 Puré de Tomate Dia 520 Gr.,24,2025,590.0,790.0,-200.0,-25.31645569620253
+Puré de Tomate Dia 520 Gr.,25,2025,490.0,590.0,-100.0,-16.94915254237288
 Queso Crema DIA Normandia 290 Gr.,23,2025,2990.0,2990.0,0.0,0.0
 Queso Crema DIA Normandia 290 Gr.,24,2025,2990.0,2990.0,0.0,0.0
+Queso Crema DIA Normandia 290 Gr.,25,2025,2990.0,2990.0,0.0,0.0
 Queso Cremoso Dia X Kg. (Proxy para Queso Cuartirolo),23,2025,12890.0,12890.0,0.0,0.0
 Queso Cremoso Dia X Kg. (Proxy para Queso Cuartirolo),24,2025,12890.0,12890.0,0.0,0.0
+Queso Cremoso Dia X Kg. (Proxy para Queso Cuartirolo),25,2025,12890.0,12890.0,0.0,0.0
 Queso Rallado DIA 150 Gr,23,2025,4572.5,4190.0,382.5,9.128878281622912
 Queso Rallado DIA 150 Gr,24,2025,4700.0,4572.5,127.5,2.7884089666484417
+Queso Rallado DIA 150 Gr,25,2025,4700.0,4700.0,0.0,0.0
 Sal Fina en Paquete Celusal 500 Gr.,23,2025,1278.125,1325.0,-46.875,-3.5377358490566038
 Sal Fina en Paquete Celusal 500 Gr.,24,2025,1200.0,1278.125,-78.125,-6.112469437652812
+Sal Fina en Paquete Celusal 500 Gr.,25,2025,1200.0,1200.0,0.0,0.0
 Salamín Cagnoli Picado Grueso 145 Gr (Ejemplo para Salame),23,2025,5290.0,5290.0,0.0,0.0
 Salamín Cagnoli Picado Grueso 145 Gr (Ejemplo para Salame),24,2025,5290.0,5290.0,0.0,0.0
+Salamín Cagnoli Picado Grueso 145 Gr (Ejemplo para Salame),25,2025,5290.0,5290.0,0.0,0.0
 Sifon De Soda Sin Tacc Dia 2 Lt.,23,2025,2337.5,2900.0,-562.5,-19.396551724137932
 Sifon De Soda Sin Tacc Dia 2 Lt.,24,2025,2150.0,2337.5,-187.5,-8.02139037433155
+Sifon De Soda Sin Tacc Dia 2 Lt.,25,2025,2000.0,2150.0,-150.0,-6.976744186046512
 Tomate Perita x 1 Kg,23,2025,5680.0,5780.0,-100.0,-1.7301038062283738
 Tomate Perita x 1 Kg,24,2025,5380.0,5680.0,-300.0,-5.28169014084507
+Tomate Perita x 1 Kg,25,2025,5380.0,5380.0,0.0,0.0
 Vainillas DIA 148 Gr.,23,2025,2500.0,2500.0,0.0,0.0
 Vainillas DIA 148 Gr.,24,2025,2500.0,2500.0,0.0,0.0
+Vainillas DIA 148 Gr.,25,2025,2500.0,2500.0,0.0,0.0
 Vinagre de Alcohol Dia 1 Lt.,23,2025,1050.0,1050.0,0.0,0.0
 Vinagre de Alcohol Dia 1 Lt.,24,2025,1050.0,1050.0,0.0,0.0
+Vinagre de Alcohol Dia 1 Lt.,25,2025,1050.0,1050.0,0.0,0.0
 Vino Tinto Cabernet Buenos Aires 750 Ml.,23,2025,4700.0,4700.0,0.0,0.0
 Vino Tinto Cabernet Buenos Aires 750 Ml.,24,2025,4700.0,4700.0,0.0,0.0
+Vino Tinto Cabernet Buenos Aires 750 Ml.,25,2025,4700.0,4700.0,0.0,0.0
 Yerba Mate Taragüi 4 Flex 500 Gr.,23,2025,4500.0,4500.0,0.0,0.0
 Yerba Mate Taragüi 4 Flex 500 Gr.,24,2025,4500.0,4500.0,0.0,0.0
+Yerba Mate Taragüi 4 Flex 500 Gr.,25,2025,4500.0,4500.0,0.0,0.0
 "Yogur Bebible Frutilla La Serenisima 1,1 Lt.",23,2025,7380.0,7380.0,0.0,0.0
 "Yogur Bebible Frutilla La Serenisima 1,1 Lt.",24,2025,5646.666666666667,7380.0,-1733.333333333333,-23.48690153568202
+"Yogur Bebible Frutilla La Serenisima 1,1 Lt.",25,2025,4780.0,5646.666666666667,-866.666666666667,-15.348288075560806
 Zanahoria x 1 Kg,23,2025,2580.0,2580.0,0.0,0.0
 Zanahoria x 1 Kg,24,2025,2580.0,2580.0,0.0,0.0
+Zanahoria x 1 Kg,25,2025,2580.0,2580.0,0.0,0.0
 Zapallo x 1 Kg,23,2025,865.0,890.0,-25.0,-2.8089887640449436
 Zapallo x 1 Kg,24,2025,790.0,865.0,-75.0,-8.670520231213873
+Zapallo x 1 Kg,25,2025,790.0,790.0,0.0,0.0
